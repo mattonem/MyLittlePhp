@@ -1,6 +1,5 @@
 <?php
 // Load my root class
-require_once(__ROOT_DIR . '/classes/MyObject.class.php');
 class AutoLoader {
 	public function __construct() {
 	spl_autoload_register(array($this, 'load'));

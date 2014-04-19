@@ -5,7 +5,7 @@ class HtmlPage {
     public $head;
     public $body;
     public $title;
-    public static $default_libraries = array('bootstrap.css');
+    public static $default_libraries = array('bootstrap.css', 'custom.css');
     
     public function __construct() {
         $this->title = "title";

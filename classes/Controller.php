@@ -10,7 +10,7 @@ abstract class Controller {
     public static function urlFor($controller, $action, $arg = array()) {
         $ret = "?controller=".$controller."&action=".$action;
         foreach ($arg as $param => $value) {
-            $ret .= '&param='.$value;
+            $ret .= '&'.$param.'='.$value;
         }
         return $ret;
     }

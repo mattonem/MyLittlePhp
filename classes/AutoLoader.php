@@ -7,10 +7,10 @@ class AutoLoader {
 	// This method will be automatically executed by PHP whenever it encounters
 	// an unknown class name in the source code
 	private function load($className) {
-		$listeDesDossiers = array("classes", "controller", "model", "view");
+		$listeDesDossiers = array("classes", "widget", "controller", "model", "view");
 		
 		$estCeQuOnEnATrouveUn = false;
-		for($i = 0; $i <4; $i++){
+		for($i = 0; $i <5; $i++){
 			$adresseFabriquee = __ROOT_DIR . "/" . $listeDesDossiers[$i] . "/" . ucfirst($className) . ".php";
 			if (is_readable($adresseFabriquee)){
 				require_once($adresseFabriquee);

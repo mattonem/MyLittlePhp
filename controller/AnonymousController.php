@@ -4,7 +4,6 @@ class AnonymousController extends Controller {
 
     public function defaultAction($requete) {
         $news = News::findAll();
-        $news[0]->setName('blabla')->save();
         var_dump($news);
     }
 

@@ -11,7 +11,7 @@ class AutoLoader {
 		
 		$estCeQuOnEnATrouveUn = false;
 		for($i = 0; $i <4; $i++){
-			$adresseFabriquee = __ROOT_DIR . "/" . $listeDesDossiers[$i] . "/" . ucfirst($className) . ".class.php";
+			$adresseFabriquee = __ROOT_DIR . "/" . $listeDesDossiers[$i] . "/" . ucfirst($className) . ".php";
 			if (is_readable($adresseFabriquee)){
 				require_once($adresseFabriquee);
 				$estCeQuOnEnATrouveUn = true;

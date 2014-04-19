@@ -1,6 +1,6 @@
 <?php
 
-class InscriptionView {
+class InscriptionView extends View{
     
     /**
      * 
@@ -10,8 +10,7 @@ class InscriptionView {
      * 
      */
     public function render($args){
-        ob_start(); 
-        include 'templates/inscriptionTemplate.php';
+      $this->template('inscription');
     }
     
 }

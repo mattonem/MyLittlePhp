@@ -13,7 +13,8 @@ class IndexView extends View {
             $content .= CardWidget::renderWidget(
                             $this->template("news", array(
                                 "title" => $aNews->getName(),
-                                "content" => $aNews->getContent(),
+                                "date" => date("m.d.y", $aNews->getDate()),
+                                "content" => $aNews->getContentHtml(),
                             )));
         }
 

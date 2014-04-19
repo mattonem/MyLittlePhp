@@ -24,9 +24,11 @@ class View {
     }
 
     public function finalize() {
-        echo "<!doctype" . " html>" . $this->template("main", array(
+        $output =  "<!doctype" . " html>" . $this->template("main", array(
             "head" => $this->page->finalizeHead(),
             "body" => $this->page->body,
         ));
+        $output = trim(preg_replace('/\s+/', ' ', $output));
+        echo $output;
     }
 }

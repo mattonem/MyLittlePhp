@@ -6,7 +6,11 @@ abstract class Controller {
     const title = "Undefined";
 
     public $page;
-
+    
+    public function getName() {
+        return substr(get_class($this), 0, strlen(get_class($this)) - 10);
+    }
+    
     public static function urlFor($controller, $action, $arg = array()) {
         $ret = "?controller=".$controller."&action=".$action;
         foreach ($arg as $param => $value) {
@@ -44,6 +48,12 @@ abstract class Controller {
         $actionMethod = $action."Action";
         $controller = new $controllerClass($this->page);
         $controller->$actionMethod($args);
+    }
+    
+    public function view($viewName, $args = null) {
+        require_once 'view/'.$this->getName().'/'.$viewName.'.php';
+        $view = new $viewName($this->page);
+        $view->render($args);
     }
 
 }

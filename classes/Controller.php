@@ -42,7 +42,7 @@ abstract class Controller {
         $this->$action($args);
     }
 
-    public function redirect($controller, $action, $args) {
+    public function redirect($controller, $action, $args = array()) {
         $this->page->head .= '<script type="text/javascript">window.history.pushState(null, null, "'.Controller::urlFor($controller,$action, $args).'");</script>';
         $controllerClass = $controller."Controller";
         $actionMethod = $action."Action";

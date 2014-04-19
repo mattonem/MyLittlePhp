@@ -10,8 +10,10 @@ class AnonymousController extends Controller {
 
     public function inscriptionArgs() {
         return array(
-            "id" => array(
-                'default' => 0
+            "GET" => array(
+                "id" => array(
+                    "default" => 42,
+                )
             )
         );
     }

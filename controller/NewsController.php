@@ -3,7 +3,7 @@
 class NewsController extends Controller{
 
     public function defaultAction($args){
-        echo "default";
+        $this->redirect("News", "index");
     }
     
     function indexAction($args) {

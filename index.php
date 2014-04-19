@@ -22,8 +22,8 @@ $request = Request::getCurrentRequest();
 try {
     $dispatcher = Dispatcher::getCurrentDispatcher();
     $controllerClass = $dispatcher->dispatchController($request);
-    $controller = new $controllerClass($request);
-    $controller->execute($dispatcher->dispatchAction($request, $controller));
+    $controller = new $controllerClass();
+    $controller->execute($dispatcher->dispatchAction($request, $controller), $request);
 } catch (Exception $e) {
     echo 'Error : ' . $e->getMessage() . "\n";
 }

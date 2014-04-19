@@ -10,7 +10,8 @@ class InscriptionView extends View{
      * 
      */
     public function render($args){
-      echo $this->template('inscription', $args);
+        $this->page->body .= $this->template('inscription', $args);
+        echo $this->page->render();
     }
     
 }

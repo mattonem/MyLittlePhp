@@ -17,7 +17,7 @@ class AnonymousController extends Controller {
     }
 
     public function inscriptionAction($args) {
-        $view = new InscriptionView();
+        $view = new InscriptionView($this->page);
         $view ->render($args);
     }
 

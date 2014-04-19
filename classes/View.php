@@ -1,8 +1,15 @@
 <?php
 
 class View {
-    
-    
+    /**
+     * @var HtmlPage 
+     */
+    public $page;
+    public function __construct($page) {
+        $this->page = $page;
+    }
+
+
     public function template($name, $values) {
         $filename = 'templates/' . $name . 'Template.php';
         if (!file_exists($filename))

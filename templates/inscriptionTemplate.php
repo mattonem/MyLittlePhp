@@ -1,1 +1,1 @@
-<h1>dada <?= $args["id"]?></h1>
+<h1>dada [@id]</h1>

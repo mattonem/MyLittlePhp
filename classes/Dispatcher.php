@@ -4,10 +4,6 @@ class Dispatcher {
 
     private static $instance;
 
-    private function __construct() {
-        
-    }
-
     /**
      *  
      * @return Dispatcher 

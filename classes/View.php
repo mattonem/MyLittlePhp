@@ -23,4 +23,10 @@ class View {
         return $output;
     }
 
+    public function finalize() {
+        echo "<!doctype" . " html>" . $this->template("main", array(
+            "head" => $this->page->finalizeHead(),
+            "body" => $this->page->body,
+        ));
+    }
 }

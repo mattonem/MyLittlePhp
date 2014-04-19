@@ -17,9 +17,8 @@ class IndexView extends View {
                             )));
         }
 
-        $this->page->body .= $this->template("main", array("content" => $content));
-
-        echo $this->page->render();
+       $this->page->body .=  $content;
+       $this->finalize();
     }
 
 }

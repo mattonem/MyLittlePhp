@@ -18,15 +18,11 @@ class HtmlPage {
             $this->head .= FileLibrary::cssLink($value);
         }
     }
-
-    public function render() {
-        $this->head .= "<title>".$this->title."</title>";
-        $doctype = '<!'.'DOCTYPE html>';
-        $content = "<head>".$this->head."</head>";
-        $content .= "<body>".$this->body."</body>";
-        return $doctype."<html>".$content."</html>";
+    
+    public function finalizeHead() {
+        return $this->head . "<title>".$this->title."</title>";
     }
-
+    
 }
 
 ?>

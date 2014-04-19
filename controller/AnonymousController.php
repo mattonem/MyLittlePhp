@@ -16,8 +16,7 @@ class AnonymousController extends Controller{
                 );
         }
         public function inscriptionAction($args) {
-            $view = new InscriptionView();
-            $view->render($args);
+            echo "coucou ".$args["id"];
         }
 }
 ?>

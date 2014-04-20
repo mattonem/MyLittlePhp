@@ -24,7 +24,7 @@ class View {
     }
 
     public function finalize() {
-        $output =  "<!doctype" . " html>" . $this->template("main", array(
+        $output = $this->template("main", array(
             "head" => $this->page->finalizeHead(),
             "body" => $this->page->body,
         ));

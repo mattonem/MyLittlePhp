@@ -28,19 +28,24 @@ class AnonymousController extends Controller {
         if (!($args["username"] && $args["password"]))
             return $this->view("LoginView", array(
                         'msg' => $args["msg"],
-                    ));
+            ));
         $user = User::findOne(array(
                     'username' => $args["username"],
                     'password' => $args["password"],
-                ));
+        ));
         if (!$user)
             return $this->redirect("Anonymous", "login", array(
-                "username" => false,
-                "password" => false,
-                "msg" => "Username or passwor incorrect.",
+                        "username" => false,
+                        "password" => false,
+                        "msg" => "Username or passwor incorrect.",
             ));
         $_SESSION['user'] = $user;
         return $this->redirect("News", "index");
+    }
+
+    public function loggoutAction() {
+        session_destroy();
+        $this->redirect("Anonymous", "default");
     }
 
 }

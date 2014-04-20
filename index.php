@@ -12,7 +12,7 @@ define('__BASE_URL', implode('/', $base_url));
 // Load the Loader and Libs class to automatically load classes when needed
 require_once(__ROOT_DIR . '/lib/BaseMongoRecord.php');
 require_once(__ROOT_DIR . '/classes/AutoLoader.php');
-
+session_start();
 // Connect database
 BaseMongoRecord::$connection = new Mongo();
 BaseMongoRecord::$database = 'mylittlephp';

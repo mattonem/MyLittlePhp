@@ -26,7 +26,9 @@ class Request {
                     $arr = $_POST;
                     break;
                 case "SESSION":
-                    $arr = $_SESSION;
+                    $arr = array();
+                    if(isset($_SESSION))
+                        $arr = $_SESSION;
                     break;
                 case "SYS":
                     $arr = $this->SYS;
@@ -49,14 +51,25 @@ class Request {
                      case "required":
                          if(!isset($arr[$name]))
                              throw new MyHttpException(400, "Param ".$name." is missing");
-                         break;
-                     case "default":
-                         
-                         if(!isset($arr[$name]))
-                             $res[$name] = $value;
                          else
                              $res[$name] = $arr[$name];
                          break;
+                         
+                     case "default":
+                         if(!isset($arr[$name]))
+                            $res[$name] = $value;
+                         else
+                            $res[$name] = $arr[$name];
+                         break;
+                         
+                     case "must":
+                         if(!isset($arr[$name]) || !$value($arr[$name]))
+                             throw new MyHttpException(400, 'bad');
+                         else
+                             $res[$name] = $arr[$name];
+                         break;
+                     case "function":
+                             $value($arr, $res);
                  }
              }
          }

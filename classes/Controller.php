@@ -48,13 +48,23 @@ abstract class Controller {
         $this->$action($args);
     }
 
-    public function redirect($controller, $action, $args = array()) {
-        //echo $action;
-        $this->page->head .= '<script type="text/javascript">window.history.pushState(null, null, "'.Controller::urlFor($controller,$action, $args).'");</script>';
+    public function redirect($controller, $action, $_args = array()) {
+        
         $controllerClass = $controller."Controller";
         $actionMethod = $action."Action";
-        $controller = new $controllerClass($this->page);
-        $controller->$actionMethod($args);
+        $methodArgs = $action.'Args';
+        $newController = new $controllerClass($this->page);
+        $reflectionObject = new ReflectionObject($newController);
+        $methodArgs = $action . "Args";
+        $args = array();
+        if ($reflectionObject->hasMethod($methodArgs))
+            $args = Request::getCurrentRequest()->prepareForAction($newController::$methodArgs());
+        $args = array_merge($args, $_args);
+        $this->page->head .= '<script type="text/javascript">'
+                . 'window.history.pushState(null, null, "'.Controller::urlFor($controller,$action, $args).'");'
+                . '</script>';
+        
+        $newController->$actionMethod($args);
     }
     
     public function view($viewName, $args = null) {

@@ -4,6 +4,10 @@
         <div class="form-group">
             <label>Name</label>
             <input type="text" name="name" class="form-control" value="[@name]">
+            <label>
+                <input type="checkbox" name="published" [@published]>
+                Published
+            </label>
         </div>
         <div class="row form-group">
             <label >Content</label>

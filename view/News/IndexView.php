@@ -16,7 +16,7 @@ class IndexView extends View {
             )));
         }
 
-        $content .= PaginationWidget::renderWidget("News", "Index", $args["total"], array('page' => $args["page"]));
+        $content .= PaginationWidget::renderWidget("News", $args["action"], $args["total"], array('page' => $args["page"]));
         $this->page->body .= $content;
         $this->finalize();
     }

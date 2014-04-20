@@ -11,6 +11,7 @@ class EditView extends View{
             "url" => Controller::urlFor("News", "edit", array("id" => $model->getID())),
             "name" => $model->getName(),
             "content" => $model->getContent(),
+            "published" => $model->getPublished(),
         )));
         $this->finalize();
     }

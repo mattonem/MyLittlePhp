@@ -68,6 +68,12 @@ class Request {
                          else
                              $res[$name] = $arr[$name];
                          break;
+                     case "may":
+                         if(!isset($arr[$name]) || !$value($arr[$name]))
+                             $res[$name] = false;
+                         else
+                             $res[$name] = $arr[$name];
+                         break;
                      case "function":
                              $value($arr, $res);
                  }

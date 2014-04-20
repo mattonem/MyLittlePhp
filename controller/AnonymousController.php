@@ -3,7 +3,7 @@
 class AnonymousController extends Controller {
 
     public function defaultAction($requete) {
-        $this->redirect("News", "index");
+        $this->redirect("News", "index", array("page" => 0));
     }
 
     static function loginArgs() {

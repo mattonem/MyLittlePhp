@@ -2,14 +2,10 @@
 
 class IndexView extends View {
 
-    /**
-     *
-     * @param News[] $args 
-     */
     public function render($args) {
         $content = "";
-
-        foreach ($args as $aNews) {
+        $models = $args["models"];
+        foreach ($models as $aNews) {
             $content .= CardWidget::renderWidget(
                             $this->template("news", array(
                                 "url" => Controller::urlFor("News", "View", array("id" => $aNews->getId())),
@@ -17,11 +13,12 @@ class IndexView extends View {
                                 "date" => date("d/m/y", $aNews->getDate()),
                                 "content" => $aNews->getContentHtml(),
                                 "id" => $aNews->getID(),
-                            )));
+            )));
         }
 
-       $this->page->body .=  $content;
-       $this->finalize();
+        $content .= PaginationWidget::renderWidget("News", "Index", $args["total"], array('page' => $args["page"]));
+        $this->page->body .= $content;
+        $this->finalize();
     }
 
 }

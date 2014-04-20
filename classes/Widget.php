@@ -1,11 +1,13 @@
 <?php
 class Widget {
     
-    public function render($content){}
+    public function render(){}
     
-    public static function renderWidget($content) {
+    public static function renderWidget() {
         $widget = new static();
-        return $widget->render($content);
+        $render = new ReflectionMethod($widget, 'render');
+        
+        return $render->invokeArgs($widget, func_get_args());
     }
 }
 

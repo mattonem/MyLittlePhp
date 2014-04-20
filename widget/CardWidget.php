@@ -2,8 +2,8 @@
 
 class CardWidget extends Widget{
 
-    public function render($content) {
-        return '<div class="card">'.$content.'</div>';
+    public function render() {
+        return '<div class="card">'.func_get_arg(0).'</div>';
     }
 }
 

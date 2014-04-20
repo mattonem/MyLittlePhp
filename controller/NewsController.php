@@ -6,9 +6,24 @@ class NewsController extends Controller{
         $this->redirect("News", "index");
     }
     
+    static function indexArgs() {
+        return array(
+            "GET" => array(
+                "page" => array(
+                     "default" => 0,
+                )
+            )
+        );
+    }
+    
     function indexAction($args) {
-        $models = News::findAll(array(), array('sort' => array('date' => 1)));
-        $this->view("IndexView",$models);
+        $total = News::count(array());
+        $models = News::findAll(array(), array('sort' => array('date' => 1), 'offset' => $args['page']*5, 'limit' => 5));
+        $this->view("IndexView",array(
+            "models" => $models,
+            "page" => $args['page'],
+            "total" => ceil($total/5)-1,
+            ));
     }
     
     static function viewArgs() {

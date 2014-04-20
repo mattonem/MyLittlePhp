@@ -24,7 +24,11 @@ try {
     $controllerClass = $dispatcher->dispatchController($request);
     $controller = new $controllerClass();
     $controller->execute($dispatcher->dispatchAction($request, $controller), $request);
-} catch (Exception $e) {
+} catch (HttpException $e) {
+    $controller = new ExceptionHandlerController();
+    $controller->defaultAction($e);
+}
+    catch (Exception $e) {
     echo 'Error : ' . $e->getMessage() . "\n";
 }
 ?>																																										

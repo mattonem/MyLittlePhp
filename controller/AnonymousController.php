@@ -4,6 +4,7 @@ class AnonymousController extends Controller {
 
     public function defaultAction($requete) {
         $news = News::findAll();
+        throw new HttpException(404, "404", null);
         var_dump($news);
     }
 

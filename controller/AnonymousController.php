@@ -40,7 +40,7 @@ class AnonymousController extends Controller {
                         "msg" => "Username or passwor incorrect.",
             ));
         $_SESSION['user'] = $user;
-        return $this->redirect("News", "index");
+        return $this->redirect("Anonymous", "default");
     }
 
     public function loggoutAction() {

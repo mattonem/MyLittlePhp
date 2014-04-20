@@ -11,7 +11,7 @@ class NewsController extends Controller{
         $this->view("IndexView",$models);
     }
     
-    function viewArgs() {
+    static function viewArgs() {
         return array(
             "GET" => array(
                 "id" => array(

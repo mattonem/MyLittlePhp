@@ -4,7 +4,7 @@ class Request {
 
     private static $instance;
 
-   
+    public $SYS = array();
 
     // getInstance method 
     public static function getCurrentRequest() {
@@ -27,6 +27,9 @@ class Request {
                     break;
                 case "SESSION":
                     $arr = $_SESSION;
+                    break;
+                case "SYS":
+                    $arr = $this->SYS;
                     break;
                 default :
                     $arr = array();
@@ -59,6 +62,11 @@ class Request {
          }
          return $res;
     }
+
+    public function addSystemArg($key, $value) {
+        $this->SYS[$key] = $value; 
+    }
+
 
     public function getNameAction() {
         if (!isset($_GET['action']))

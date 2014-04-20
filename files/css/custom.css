@@ -13,6 +13,10 @@ body {
     padding: 1.5rem;
 }
 
+.input-group {
+    margin: 1.5rem;
+}
+
 img {
     display: block;
     margin-left: auto;

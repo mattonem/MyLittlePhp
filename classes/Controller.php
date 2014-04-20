@@ -14,7 +14,13 @@ abstract class Controller {
     public static function urlFor($controller, $action, $arg = array()) {
         $ret = "?controller=".$controller."&action=".$action;
         foreach ($arg as $param => $value) {
-            $ret .= '&'.$param.'='.$value;
+            $argMethod = $action.'Args';
+            $controllerClass = $controller.'Controller';
+            $requirements = array();
+            if(method_exists($controllerClass, $argMethod))
+                $requirements = $controllerClass::$argMethod();
+            if(isset($requirements["GET"][$param] ))
+                $ret .= '&'.$param.'='.$value;
         }
         return $ret;
     }
@@ -38,11 +44,12 @@ abstract class Controller {
         $methodArgs = $request->getNameAction() . "Args";
         $args = array();
         if ($reflectionObject->hasMethod($methodArgs))
-            $args = $request->prepareForAction($this->$methodArgs());
+            $args = $request->prepareForAction(static::$methodArgs());
         $this->$action($args);
     }
 
     public function redirect($controller, $action, $args = array()) {
+        //echo $action;
         $this->page->head .= '<script type="text/javascript">window.history.pushState(null, null, "'.Controller::urlFor($controller,$action, $args).'");</script>';
         $controllerClass = $controller."Controller";
         $actionMethod = $action."Action";

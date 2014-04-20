@@ -3,22 +3,44 @@
 class AnonymousController extends Controller {
 
     public function defaultAction($requete) {
-        $news = News::findAll();
-        var_dump($news);
+        $this->redirect("News", "index");
     }
 
-    public function inscriptionArgs() {
+    static function loginArgs() {
         return array(
-            "GET" => array(
-                "id" => array(
-                    "required" => true,
-                )
-            )
+            "POST" => array(
+                "username" => array(
+                    "default" => false
+                ),
+                "password" => array(
+                    "default" => false
+                ),
+            ),
+            "SYS" => array(
+                "msg" => array(
+                    "default" => "",
+                ),
+            ),
         );
     }
 
-    public function inscriptionAction($args) {
-        $this->view("InscriptionView", $args);
+    public function loginAction($args) {
+        if (!($args["username"] && $args["password"]))
+            return $this->view("LoginView", array(
+                        'msg' => $args["msg"],
+                    ));
+        $user = User::findOne(array(
+                    'username' => $args["username"],
+                    'password' => $args["password"],
+                ));
+        if (!$user)
+            return $this->redirect("Anonymous", "login", array(
+                "username" => false,
+                "password" => false,
+                "msg" => "Username or passwor incorrect.",
+            ));
+        $_SESSION['user'] = $user;
+        return $this->redirect("News", "index");
     }
 
 }

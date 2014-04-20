@@ -24,7 +24,7 @@ try {
     $controllerClass = $dispatcher->dispatchController($request);
     $controller = new $controllerClass();
     $controller->execute($dispatcher->dispatchAction($request, $controller), $request);
-} catch (HttpException $e) {
+} catch (MyHttpException $e) {
     $controller = new ExceptionHandlerController();
     $controller->defaultAction($e);
 }

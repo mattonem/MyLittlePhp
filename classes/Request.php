@@ -45,7 +45,7 @@ class Request {
                  switch ($key) {
                      case "required":
                          if(!isset($arr[$name]))
-                             throw new Exception("La valeur ".$name. " doit etre set.");
+                             throw new MyHttpException(400, "Param ".$name." is missing");
                          break;
                      case "default":
                          

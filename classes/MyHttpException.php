@@ -1,5 +1,5 @@
 <?php
-class HttpException extends Exception{
+class MyHttpException extends Exception{
     public $code;
     public $message;
     

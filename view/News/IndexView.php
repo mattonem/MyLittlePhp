@@ -14,7 +14,7 @@ class IndexView extends View {
                             $this->template("news", array(
                                 "url" => Controller::urlFor("News", "View", array("id" => $aNews->getId())),
                                 "title" => $aNews->getName(),
-                                "date" => date("m.d.y", $aNews->getDate()),
+                                "date" => date("d/m/y", $aNews->getDate()),
                                 "content" => $aNews->getContentHtml(),
                                 "id" => $aNews->getID(),
                             )));

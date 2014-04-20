@@ -64,6 +64,39 @@ class NewsController extends Controller{
         $model->save();
         return $this->redirect("News", "view", array("id" => $model->getId()));
     }
+    
+    static function createArgs() {
+        return array(
+            'POST' => array(
+                'name' => array(
+                    'default' => false,
+                ),
+                'content' => array(
+                    'default' => false,
+                ),
+            ),
+            'SESSION' => array(
+                'user' => array(
+                    'must' => function($user){
+                        return $user->getAdmin();
+                    },
+                ),
+            ),
+        );
+    }
+    
+    function createAction($args) {
+        $model = new News();
+        if(!($args["name"] || $args["content"]))
+            return $this->view("CreateView",$model);
+        if($args['name'])
+            $model->setName($args["name"]);
+        if($args['content'])
+            $model->setContent($args['content']);
+        $model->save();
+        return $this->redirect("News", "view", array("id" => $model->getId()));
+    }
+    
 }
 
 ?>

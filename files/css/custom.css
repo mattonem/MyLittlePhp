@@ -31,3 +31,15 @@ img {
 footer {
     border-top: 1px solid #bbb;
 }
+
+iframe {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
+}
+
+p {
+    text-align:justify;
+    text-justify:inter-word;
+}

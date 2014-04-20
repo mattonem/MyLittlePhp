@@ -4,11 +4,11 @@ class News extends BaseMongoRecord {
 
     protected static $collectionName = 'news';
     public $_env = array();
-    
+
     public function beforeSave() {
-        if(!$this->getPublished())
+        if (!$this->getPublished())
             $this->setPublished(false);
-        if(!$this->getDate())
+        if (!$this->getDate())
             $this->setDate(time());
         parent::beforeSave();
     }
@@ -52,35 +52,41 @@ class News extends BaseMongoRecord {
     }
 
     public function par() {
-            return "</".end($this->_env).">"."<".end($this->_env).">";
+        return "</" . end($this->_env) . ">" . "<" . end($this->_env) . ">";
     }
 
     public function env($envName) {
-        return $this->closeenv().$this->openenv($envName);
+        return $this->closeenv() . $this->openenv($envName);
     }
-    
-    public function openenv($env){
+
+    public function openenv($env) {
         array_push($this->_env, $env);
         return "<" . $env . ">";
     }
-    
-    public function closeenv(){
+
+    public function closeenv() {
         return "</" . array_pop($this->_env) . ">";
     }
-    
-    public function closeAll(){
+
+    public function closeAll() {
         $output = "";
-        while (count($this->_env) > 0) 
+        while (count($this->_env) > 0)
             $output .= $this->closeenv();
         return $output;
     }
-    
+
     public function link($address, $_name = null) {
         $name = $_name;
-        if(!$name)
+        if (!$name)
             $name = $address;
-        return '<a href="'.$address.'">'.$name.'</a>';
-        
+        return '<a href="' . $address . '">' . $name . '</a>';
     }
-    
+
+    public function youtube($address) {
+        return '<iframe title="YouTube video 
+            player" class="youtube-player" type="text/html" 
+            width="400" height="300" src="' . $address . '"
+            frameborder="0" allowFullScreen></iframe>';
+    }
+
 }

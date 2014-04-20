@@ -75,4 +75,12 @@ class News extends BaseMongoRecord {
         return $output;
     }
     
+    public function link($address, $_name = null) {
+        $name = $_name;
+        if(!$name)
+            $name = $address;
+        return '<a href="'.$address.'">'.$name.'</a>';
+        
+    }
+    
 }

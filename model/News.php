@@ -5,6 +5,10 @@ class News extends ActiveRecord\Model {
     protected static $collectionName = 'news';
     public $_env = array();
 
+    static function br2nl($string) {
+        return preg_replace('/\<br(\s*)?\/?\>/i', "&#13;&#10;", $string);
+    }
+
     public function beforeSave() {
         if (!$this->getPublished())
             $this->setPublished(false);

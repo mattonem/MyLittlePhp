@@ -10,7 +10,7 @@ class EditView extends View{
         $this->template("editNews", array(
             "url" => Controller::urlFor("News", "edit", array("id" => $model->id)),
             "name" => $model->name,
-            "content" => $model->content,
+            "content" => News::br2nl($model->content),
             "published" => ($model->published)?"checked":"",
         )));
         $this->finalize();

@@ -21,6 +21,8 @@ class News extends ActiveRecord\Model {
         $output = "";
         $output .= $this->openenv("p");
         $contentBrut = $this->content;
+        $contentBrut = str_replace('<br>[@', '[@', $contentBrut);
+        $contentBrut = str_replace(']<br>', ']', $contentBrut);
         $explodeStartTags = explode('[@', $contentBrut);
         $i = 0;
         foreach ($explodeStartTags as $value) {

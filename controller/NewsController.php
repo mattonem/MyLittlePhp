@@ -112,7 +112,7 @@ class NewsController extends Controller {
     }
 
     function editAction($args) {
-        $model = News::find_by_pk($args["id"]);
+        $model = News::find_by_pk($args["id"], array());
         if (!($args["name"] || $args["content"]))
             return $this->view("EditView", $model);
         if ($args['name'])

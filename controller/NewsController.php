@@ -124,7 +124,7 @@ class NewsController extends Controller {
         else
             $model->published = false;
         $model->save();
-        return $this->redirect("News", "view", array("id" => $model->getId()));
+        return $this->redirect("News", "view", array("id" => $model->id));
     }
 
     static function createArgs() {

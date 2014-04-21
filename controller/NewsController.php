@@ -17,8 +17,9 @@ class NewsController extends Controller {
     }
 
     function indexAction($args) {
-        $total = News::count(array());
-        $models = News::findAll(array('published' => true), array('sort' => array('date' => 1), 'offset' => $args['page'] * 5, 'limit' => 5));
+        $query = array('conditions' => array('published=?', true));
+        $total = News::count($query);
+        $models = News::find('all', $query);
         $this->view("IndexView", array(
             "models" => $models,
             "page" => $args['page'],
@@ -37,7 +38,7 @@ class NewsController extends Controller {
             'SESSION' => array(
                 'user' => array(
                     'must' => function($user) {
-                return $user->getAdmin();
+                return $user->admin;
             },
                 ),
             ),
@@ -66,7 +67,7 @@ class NewsController extends Controller {
             'SESSION' => array(
                 'user' => array(
                     'may' => function($user) {
-                        return $user->getAdmin();
+                        return $user->admin;
                     },
                 ),
             ),
@@ -76,8 +77,8 @@ class NewsController extends Controller {
     function viewAction($args) {
         if (!$args["id"])
             return $this->redirect("News", "index");
-        $model = News::findById($args["id"]);
-        if(!$args['user'] && !$model->getPublished())
+        $model = News::find_by_pk($args["id"],array());
+        if( !$args['user'] && !$model->published)
             throw new MyHttpException(403, "bad");
         $this->view("ViewView", $model);
     }
@@ -103,7 +104,7 @@ class NewsController extends Controller {
             'SESSION' => array(
                 'user' => array(
                     'must' => function($user) {
-                return $user->getAdmin();
+                return $user->admin;
             },
                 ),
             ),
@@ -111,15 +112,15 @@ class NewsController extends Controller {
     }
 
     function editAction($args) {
-        $model = News::findById($args["id"]);
+        $model = News::find_by_pk($args["id"]);
         if (!($args["name"] || $args["content"]))
             return $this->view("EditView", $model);
         if ($args['name'])
-            $model->setName($args["name"]);
+            $model->name = $args["name"];
         if ($args['content'])
-            $model->setContent($args['content']);
+            $model->content = $args['content'];
         if ($args['published'])
-            $model->setPublished(true);
+            $model->published = true;
         else
             $model->setPublished(false);
         $model->save();
@@ -142,7 +143,7 @@ class NewsController extends Controller {
             'SESSION' => array(
                 'user' => array(
                     'must' => function($user) {
-                return $user->getAdmin();
+                return $user->admin;
             },
                 ),
             ),
@@ -154,11 +155,51 @@ class NewsController extends Controller {
         if (!($args["name"] || $args["content"]))
             return $this->view("CreateView", $model);
         if ($args['name'])
-            $model->setName($args["name"]);
+            $model->name = $args["name"];
         if ($args['content'])
-            $model->setContent($args['content']);
+            $model->content = $args['content'];
+        if ($args['published'])
+            $model->published = true;
+        else
+            $model->setPublished(false);
         $model->save();
-        return $this->redirect("News", "view", array("id" => $model->getId()));
+        return $this->redirect("News", "view", array("id" => $model->id));
+    }
+    
+    static function searchArgs() {
+        return array(
+            "GET" => array(
+                "keywords" => array(
+                    "default" => false,
+                )
+            ),
+            'SESSION' => array(
+                'user' => array(
+                    'may' => function($user) {
+                        return $user->getAdmin();
+                    },
+                ),
+            ),
+        );
+    }
+    
+    function searchAction($arg) {
+        $words =  $arg["keywords"];
+        if($arg['user'])
+            $query = array();
+        else
+            $query = array('published' => true);
+        $query['or'] = array('content' => array('regex' => '.*'."are".'.*'));
+        var_dump($query);
+        
+        var_dump(News::count($query));
+        $models = News::findAll(array(), array('sort' => array('date' => 1), 'offset' => $args['page'] * 5, 'limit' => 5));
+        $this->view("IndexView", array(
+            "models" => $models,
+            "page" => $args['page'],
+            "total" => ceil($total / 5) - 1,
+            "action" => "IndexAll",
+        ));
     }
 
 }

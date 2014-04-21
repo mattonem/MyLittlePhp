@@ -9,8 +9,9 @@ class CreateView extends View{
         $this->page->body .= CardWidget::renderWidget(
         $this->template("editNews", array(
             "url" => Controller::urlFor("News", "create"),
-            "name" => $model->getName(),
-            "content" => $model->getContent(),
+            "name" => $model->name,
+            "content" => $model->content,
+            "published" => "",
         )));
         $this->finalize();
     }

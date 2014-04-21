@@ -29,10 +29,7 @@ class AnonymousController extends Controller {
             return $this->view("LoginView", array(
                         'msg' => $args["msg"],
             ));
-        $user = User::findOne(array(
-                    'username' => $args["username"],
-                    'password' => $args["password"],
-        ));
+        $user = User::find_by_username_and_password($args['username'], $args['password']);
         if (!$user)
             return $this->redirect("Anonymous", "login", array(
                         "username" => false,

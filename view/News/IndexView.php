@@ -8,11 +8,11 @@ class IndexView extends View {
         foreach ($models as $aNews) {
             $content .= CardWidget::renderWidget(
                             $this->template("news", array(
-                                "url" => Controller::urlFor("News", "View", array("id" => $aNews->getId())),
-                                "title" => $aNews->getName(),
-                                "date" => date("d/m/y", $aNews->getDate()),
+                                "url" => Controller::urlFor("News", "View", array("id" => $aNews->id)),
+                                "title" => $aNews->name,
+                                "date" => date("m.d.y", strtotime($aNews->date)),
                                 "content" => $aNews->getContentHtml(),
-                                "id" => $aNews->getID(),
+                                "id" => $aNews->id,
             )));
         }
 

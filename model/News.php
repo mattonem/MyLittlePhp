@@ -1,6 +1,6 @@
 <?php
 
-class News extends BaseMongoRecord {
+class News extends ActiveRecord\Model {
 
     protected static $collectionName = 'news';
     public $_env = array();
@@ -16,7 +16,7 @@ class News extends BaseMongoRecord {
     public function getContentHtml() {
         $output = "";
         $output .= $this->openenv("p");
-        $contentBrut = $this->getContent();
+        $contentBrut = $this->content;
         $explodeStartTags = explode('[@', $contentBrut);
         $i = 0;
         foreach ($explodeStartTags as $value) {

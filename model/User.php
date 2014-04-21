@@ -1,5 +1,5 @@
 <?php
-class User extends BaseMongoRecord{
+class User extends ActiveRecord\Model{
 
     protected static $collectionName = 'user';
 }

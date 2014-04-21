@@ -19,7 +19,7 @@
             <div class="row text-muted">
                 Running 
                 <a href="http://www.php.net/" class="text-muted">php</a>
-                <a href="http://www.mongodb.org/" class="text-muted">mongoDB</a>
+                <a href="http://www.mysql.com/" class="text-muted">MySQL</a>
             </div>
         </div>
         </footer>

@@ -42,6 +42,7 @@ class AnonymousController extends Controller {
 
     public function loggoutAction() {
         session_destroy();
+        session_start();
         $this->redirect("Anonymous", "default");
     }
 

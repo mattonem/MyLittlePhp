@@ -21,8 +21,6 @@ class News extends ActiveRecord\Model {
         $output = "";
         $output .= $this->openenv("p");
         $contentBrut = $this->content;
-        $contentBrut = str_replace('<br>[@', '[@', $contentBrut);
-        $contentBrut = str_replace(']<br>', ']', $contentBrut);
         $explodeStartTags = explode('[@', $contentBrut);
         $i = 0;
         foreach ($explodeStartTags as $value) {
@@ -50,7 +48,7 @@ class News extends ActiveRecord\Model {
         }
         if ($this->_env != array())
             $output .= $this->closeAll();
-        return $output;
+        return nl2br($output);
     }
 
     public function img($url, $width = null, $height = null) {

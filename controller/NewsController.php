@@ -118,7 +118,7 @@ class NewsController extends Controller {
         if ($args['name'])
             $model->name = $args["name"];
         if ($args['content'])
-            $model->content = nl2br($args['content']);
+            $model->content = $args['content'];
         if ($args['published'])
             $model->published = true;
         else

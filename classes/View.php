@@ -15,7 +15,7 @@ class View {
         if (!file_exists($filename))
             return "null";
         $output = file_get_contents($filename);
-
+        $output = trim(preg_replace('/\s+/', ' ', $output));
         foreach ($values as $key => $value) {
             $tagToReplace = "[@$key]";
             $output = str_replace($tagToReplace, $value, $output);
@@ -28,7 +28,6 @@ class View {
             "head" => $this->page->finalizeHead(),
             "body" => $this->page->body,
         ));
-        $output = trim(preg_replace('/\s+/', ' ', $output));
         echo $output;
     }
 }

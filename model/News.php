@@ -81,8 +81,14 @@ class News extends ActiveRecord\Model {
 
     public function link($address, $_name = null) {
         $name = $_name;
-        if (!$name)
+        if ($name){
+            foreach (array_slice(func_get_args(),1) as $value) {
+                $name .= " ".$value;
+            }
+        } else {
             $name = $address;
+        }
+            
         return '<a href="' . $address . '">' . $name . '</a>';
     }
 

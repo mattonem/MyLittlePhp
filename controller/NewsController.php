@@ -122,7 +122,7 @@ class NewsController extends Controller {
         if ($args['published'])
             $model->published = true;
         else
-            $model->setPublished(false);
+            $model->published = false;
         $model->save();
         return $this->redirect("News", "view", array("id" => $model->getId()));
     }

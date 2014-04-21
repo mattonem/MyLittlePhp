@@ -13,42 +13,22 @@ class NewsController extends Controller {
                     "default" => 0,
                 )
             ),
+            'SESSION' => array(
+                'user' => array(
+                    'may' => function($user) {
+                        return $user->admin;
+                    },
+                ),
+            ),
         );
     }
 
     function indexAction($args) {
-        $query = array('conditions' => array('published=?', true));
+        $query = array('order' => 'date desc', 'conditions' => array('published=?', true));
+        if($args['user'])
+            $query['conditions'] = array();
         $total = News::count($query);
         $models = News::find('all', $query);
-        $this->view("IndexView", array(
-            "models" => $models,
-            "page" => $args['page'],
-            "total" => ceil($total / 5) - 1,
-            "action" => "IndexAll",
-        ));
-    }
-
-    static function indexAllArgs() {
-        return array(
-            "GET" => array(
-                "page" => array(
-                    "default" => 0,
-                )
-            ),
-            'SESSION' => array(
-                'user' => array(
-                    'must' => function($user) {
-                return $user->admin;
-            },
-                ),
-            ),
-            
-        );
-    }
-
-    function indexAllAction($args) {
-        $total = News::count(array());
-        $models = News::findAll(array(), array('sort' => array('date' => 1), 'offset' => $args['page'] * 5, 'limit' => 5));
         $this->view("IndexView", array(
             "models" => $models,
             "page" => $args['page'],
@@ -176,7 +156,7 @@ class NewsController extends Controller {
             'SESSION' => array(
                 'user' => array(
                     'may' => function($user) {
-                        return $user->getAdmin();
+                        return $user->admin;
                     },
                 ),
             ),

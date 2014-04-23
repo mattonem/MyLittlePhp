@@ -24,7 +24,7 @@ class NewsController extends Controller {
     }
 
     function indexAction($args) {
-        $query = array('order' => 'date desc', 'conditions' => array('published=?', true));
+        $query = array('order' => 'date desc','limit' => 3,'offset' => 3*$args['page'] , 'conditions' => array('published=?', true));
         if($args['user'])
             $query['conditions'] = array();
         $total = News::count($query);
@@ -32,8 +32,8 @@ class NewsController extends Controller {
         $this->view("IndexView", array(
             "models" => $models,
             "page" => $args['page'],
-            "total" => ceil($total / 5) - 1,
-            "action" => "IndexAll",
+            "total" => ceil($total / 3) - 1,
+            "action" => "Index",
         ));
     }
 

@@ -93,9 +93,9 @@ class News extends ActiveRecord\Model {
     }
 
     public function youtube($address) {
-        return '<iframe title="YouTube video'. 
-            'player" class="youtube-player" type="text/html"'. 
-            'width="400" height="300" src="' . $address . '"'.
+        return '<iframe title="YouTube video '. 
+            'player" class="youtube-player" type="text/html" '. 
+            'width="400" height="300" src="' . $address . '" '.
             'frameborder="0" allowFullScreen></iframe>';
     }
 

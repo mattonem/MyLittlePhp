@@ -33,7 +33,10 @@ class News extends ActiveRecord\Model {
             $explodeEndTags = explode(']', $value);
             foreach ($explodeEndTags as $value2) {
                 if ($j > 0) {
-                    $output .=$value2;
+                    if($j > 1) {
+                        $output .= ']';
+                    }
+                    $output .= $value2;
                     $j++;
                     continue;
                 }

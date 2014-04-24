@@ -84,7 +84,7 @@ class News extends ActiveRecord\Model {
 
     public function link($address, $_name = null) {
         $name = "";
-        if ($name){
+        if ($_name){
             foreach (array_slice(func_get_args(),1) as $value) {
                 $name .= " ".$value;
             }
@@ -92,7 +92,7 @@ class News extends ActiveRecord\Model {
             $name = $address;
         }
             
-        return '<a href="' . $address . '">' . $name . '</a>';
+        return '<a href="' . htmlspecialchars($address) . '">' . $name . '</a>';
     }
 
     public function youtube($address) {

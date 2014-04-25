@@ -22,7 +22,7 @@ abstract class Controller {
             if(isset($requirements["GET"][$param] ))
                 $ret .= '&'.$param.'='.$value;
         }
-        return $ret;
+        return htmlspecialchars($ret);
     }
 
     public function __construct($page = null) {

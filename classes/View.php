@@ -28,6 +28,6 @@ class View {
             "head" => $this->page->finalizeHead(),
             "body" => $this->page->body,
         ));
-        echo $output;
+        echo trim($output);
     }
 }

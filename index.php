@@ -11,6 +11,7 @@ $base_url = explode('/', $_SERVER['PHP_SELF']);
 array_pop($base_url);
 define('__BASE_URL', implode('/', $base_url));
 // Load the Loader and Libs class to automatically load classes when needed
+require_once(__ROOT_DIR . '/lib/addendum/annotations.php');
 require_once(__ROOT_DIR . '/lib/php-activerecord/ActiveRecord.php');
 require_once(__ROOT_DIR . '/classes/AutoLoader.php');
 // Connect database

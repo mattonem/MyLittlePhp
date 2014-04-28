@@ -1,32 +1,23 @@
 <?php
 
 class AnonymousController extends Controller {
-
+    
+    /**
+     * @Action
+     */
     public function defaultAction($requete) {
         $this->redirect("News", "index", array("page" => 0));
     }
-
-    static function loginArgs() {
-        return array(
-            "POST" => array(
-                "username" => array(
-                    "default" => false
-                ),
-                "password" => array(
-                    "default" => false
-                ),
-            ),
-            "SYS" => array(
-                "msg" => array(
-                    "default" => "",
-                ),
-            ),
-        );
-    }
-
-    public function loginAction($args) {
+    
+    /**
+     * @Action
+     * @Requires(method='POST', name='username', requirement = @DefaultValue(value = false))
+     * @Requires(method='POST', name='password', requirement = @DefaultValue(value = false))
+     * @Requires(method='SYS', name='msg', requirement = @DefaultValue(value = ''))
+     */
+    public function login($args) {
         if (!($args["username"] && $args["password"]))
-            return $this->view("LoginView", array(
+            return $this->callView("LoginView", array(
                         'msg' => $args["msg"],
             ));
         $user = User::find_by_username_and_password($args['username'], $args['password']);
@@ -37,13 +28,16 @@ class AnonymousController extends Controller {
                         "msg" => "Username or passwor incorrect.",
             ));
         $_SESSION['user'] = $user;
-        return $this->redirect("Anonymous", "default");
+        return $this->redirect("Anonymous", "defaultAction");
     }
-
-    public function loggoutAction() {
+    
+    /**
+     * @Action
+     */
+    public function loggout() {
         session_destroy();
         session_start();
-        $this->redirect("Anonymous", "default");
+        $this->redirect("Anonymous", "defaultAction");
     }
 
 }

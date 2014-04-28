@@ -12,6 +12,7 @@ array_pop($base_url);
 define('__BASE_URL', implode('/', $base_url));
 // Load the Loader and Libs class to automatically load classes when needed
 require_once(__ROOT_DIR . '/lib/addendum/annotations.php');
+require_once(__ROOT_DIR . '/classes/Annotations.php');
 require_once(__ROOT_DIR . '/lib/php-activerecord/ActiveRecord.php');
 require_once(__ROOT_DIR . '/classes/AutoLoader.php');
 // Connect database
@@ -27,9 +28,8 @@ session_start();
 $request = Request::getCurrentRequest();
 try {
 $dispatcher = Dispatcher::getCurrentDispatcher();
-$controllerClass = $dispatcher->dispatchController($request);
-$controller = new $controllerClass();
-$controller->execute($dispatcher->dispatchAction($request, $controller), $request);
+$controller = $dispatcher->dispatchController($request);
+$controller->execute($dispatcher->dispatchAction($request, $controller));
 } catch (MyHttpException $e) {
 $controller = new ExceptionHandlerController();
 $controller->defaultAction($e);

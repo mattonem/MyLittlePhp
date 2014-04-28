@@ -15,10 +15,15 @@ class Request {
         return self::$instance;
     }
 
-    public function prepareForAction($descriptionParams) {
+    /**
+     * 
+     * @param Requires[] $requiresAnnotation
+     * @return type
+     */
+    public function prepareForAction($requiresAnnotation) {
         $res = array();
-        foreach ($descriptionParams as $method => $requirements) {
-            switch ($method) {
+        foreach ($requiresAnnotation as $requires) {
+            switch ($requires->method) {
                 case "GET":
                     $arr = $_GET;
                     break;
@@ -36,50 +41,17 @@ class Request {
                 default :
                     $arr = array();
             }
-            $res = array_merge($res, $this->chechArrFor($arr, $requirements));
+            $temp= null;
+            if(!is_array($requires->requirement))
+                $temp = $requires->requirement->check($arr, $requires->name);
+            else {
+                foreach ($requires->requirement as $req)
+                    $temp = $req->check($arr, $requires->name, $temp);
+            }
+            $res[$requires->name] = $temp;
         }
         
         return $res;
-    }
-    
-     public function chechArrFor($arr, $requirements) {
-         $res = array();
-         foreach ($requirements as $name => $requirement) {
-             foreach ($requirement as $key => $value) {
-                 
-                 switch ($key) {
-                     case "required":
-                         if(!isset($arr[$name]))
-                             throw new MyHttpException(400, "Param ".$name." is missing");
-                         else
-                             $res[$name] = $arr[$name];
-                         break;
-                         
-                     case "default":
-                         if(!isset($arr[$name]))
-                            $res[$name] = $value;
-                         else
-                            $res[$name] = $arr[$name];
-                         break;
-                         
-                     case "must":
-                         if(!isset($arr[$name]) || !$value($arr[$name]))
-                             throw new MyHttpException(400, 'bad');
-                         else
-                             $res[$name] = $arr[$name];
-                         break;
-                     case "may":
-                         if(!isset($arr[$name]) || !$value($arr[$name]))
-                             $res[$name] = false;
-                         else
-                             $res[$name] = $arr[$name];
-                         break;
-                     case "function":
-                             $value($arr, $res);
-                 }
-             }
-         }
-         return $res;
     }
 
     public function addSystemArg($key, $value) {

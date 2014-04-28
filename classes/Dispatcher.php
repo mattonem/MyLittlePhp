@@ -23,8 +23,8 @@ class Dispatcher {
      */
     public function dispatchController($request) {
         if($request->getNameController())
-            return $request->getNameController ().'Controller';
-        return Controller::defaultController.'Controller';
+            return Controller::getInstance($request->getNameController());
+        return Controller::getInstance(Controller::defaultController);
     }
     
     /**
@@ -34,12 +34,12 @@ class Dispatcher {
      * @return String
      */
     public function dispatchAction($request, $controller) {
-        $reflectionObject = new ReflectionObject($controller);
-        $action = $request->getNameAction();
-        if($request->getNameAction() && $reflectionObject->hasMethod($action.'Action'))
-            return $request->getNameAction().'Action';
-        else
-            return Controller::defaultAction.'Action';       
+        if(!$request->getNameAction())
+            return $controller->getAction (Controller::defaultAction);
+        $method = $controller->getAction($request->getNameAction());
+        if($method)
+            return $method;
+        return $controller->getAction (Controller::defaultAction);  
     }
 
 }

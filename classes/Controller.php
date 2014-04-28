@@ -1,12 +1,36 @@
 <?php
 
 abstract class Controller {
-    const defaultAction = "default";
+    const defaultAction = "defaultAction";
     const defaultController = "Anonymous";
     const title = "Undefined";
 
     public $page;
     
+    public function getActions(){
+        $ref = new ReflectionAnnotatedClass($this);
+        $res = array();
+        foreach ($ref->getMethods() as $method) {
+            if($method->hasAnnotation('Action'))
+                $res[] = $method;
+        }
+        return $res;
+    }
+    
+    public function getAction($name){
+        $actions = $this->getActions();
+        foreach ($actions as $action){
+            if($action->name == $name)
+                return $action;
+        }
+        return null;
+    }
+    
+    public static function getInstance($name, $htmlPage = null){
+        $class = $name.'Controller';
+        return new $class($htmlPage);
+    }
+
     public function getName() {
         return substr(get_class($this), 0, strlen(get_class($this)) - 10);
     }
@@ -14,15 +38,9 @@ abstract class Controller {
     public static function urlFor($controller, $action, $arg = array()) {
         $ret = "?controller=".$controller."&action=".$action;
         foreach ($arg as $param => $value) {
-            $argMethod = $action.'Args';
-            $controllerClass = $controller.'Controller';
-            $requirements = array();
-            if(method_exists($controllerClass, $argMethod))
-                $requirements = $controllerClass::$argMethod();
-            if(isset($requirements["GET"][$param] ))
-                $ret .= '&'.$param.'='.$value;
+            $ret .= '&'.$param.'='.$value;
         }
-        return htmlspecialchars($ret);
+        return $ret;
     }
 
     public function __construct($page = null) {
@@ -33,41 +51,32 @@ abstract class Controller {
         $this->page->title = self::title;
     }
 
+    /**
+     * @Action
+     */
     abstract public function defaultAction($requete);
 
     /**
      *
      * @param string $action 
      */
-    public function execute($action, $request) {
-        $reflectionObject = new ReflectionObject($this);
-        $methodArgs = $request->getNameAction() . "Args";
-        $args = array();
-        if ($reflectionObject->hasMethod($methodArgs))
-            $args = $request->prepareForAction(static::$methodArgs());
-        $this->$action($args);
+    public function execute($action, $override = array()) {
+        $allAnnotations = $action->getAllAnnotations('Requires');
+        $args = Request::getCurrentRequest()->prepareForAction($allAnnotations);
+        $args = array_merge($args, $override);
+        $action->invoke($this,$args);
     }
 
-    public function redirect($controller, $action, $_args = array()) {
-        
-        $controllerClass = $controller."Controller";
-        $actionMethod = $action."Action";
-        $methodArgs = $action.'Args';
-        $newController = new $controllerClass($this->page);
-        $reflectionObject = new ReflectionObject($newController);
-        $methodArgs = $action . "Args";
-        $args = array();
-        if ($reflectionObject->hasMethod($methodArgs))
-            $args = Request::getCurrentRequest()->prepareForAction($newController::$methodArgs());
-        $args = array_merge($args, $_args);
+    public function redirect($controllerName, $action, $args = array()) {
+        $newController = self::getInstance($controllerName, $this->page);
         $this->page->head .= '<script type="text/javascript">'
-                . 'window.history.pushState(null, null, "'.Controller::urlFor($controller,$action, $args).'");'
+                . 'window.history.pushState(null, null, "'.Controller::urlFor($controllerName,$action, $args).'");'
                 . '</script>';
-        
-        $newController->$actionMethod($args);
+        $actionMethod = $newController->getAction($action);
+        $newController->execute($actionMethod, $args);
     }
     
-    public function view($viewName, $args = null) {
+    public function callView($viewName, $args = null) {
         require_once 'view/'.$this->getName().'/'.$viewName.'.php';
         $view = new $viewName($this->page);
         $view->render($args);

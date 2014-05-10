@@ -3,7 +3,7 @@
 class CardWidget extends Widget{
 
     public function render() {
-        return '<div class="card">'.func_get_arg(0).'</div>';
+        return $this->template('card', array('content' => func_get_arg(0)));
     }
 }
 

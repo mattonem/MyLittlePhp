@@ -11,8 +11,9 @@ abstract class Controller {
         $ref = new ReflectionAnnotatedClass($this);
         $res = array();
         foreach ($ref->getMethods() as $method) {
-            if($method->hasAnnotation('Action'))
+            if ($method->hasAnnotation('Action')) {
                 $res[] = $method;
+            }
         }
         return $res;
     }
@@ -20,8 +21,9 @@ abstract class Controller {
     public function getAction($name){
         $actions = $this->getActions();
         foreach ($actions as $action){
-            if($action->name == $name)
+            if ($action->name == $name) {
                 return $action;
+            }
         }
         return null;
     }
@@ -44,10 +46,11 @@ abstract class Controller {
     }
 
     public function __construct($page = null) {
-        if ($page)
+        if ($page) {
             $this->page = $page;
-        else
+        } else {
             $this->page = new HtmlPage();
+        }
         $this->page->title = self::title;
     }
 
@@ -65,7 +68,8 @@ abstract class Controller {
     public function redirect($controllerName, $action, $args = array()) {
         $newController = self::getInstance($controllerName, $this->page);
         $this->page->head .= '<script type="text/javascript">'
-                . 'window.history.pushState(null, null, "'.Controller::urlFor($controllerName,$action, $args).'");'
+                . 'window.history.pushState(null, null, "'
+                .Controller::urlFor($controllerName,$action, $args).'");'
                 . '</script>';
         $actionMethod = $newController->getAction($action);
         $newController->execute($actionMethod, $args);
@@ -79,4 +83,4 @@ abstract class Controller {
 
 }
 
-?>
+

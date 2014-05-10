@@ -22,12 +22,13 @@ class AnonymousController extends Controller {
             ));
         }
         $user = User::find_by_username_and_password($username, $password);
-        if (!$user)
+        if (!$user) {
             return $this->redirect("Anonymous", "login", array(
                         "username" => false,
                         "password" => false,
                         "msg" => "Username or passwor incorrect.",
             ));
+        }
         $_SESSION['user'] = $user;
         return $this->redirect("Anonymous", "defaultAction");
     }

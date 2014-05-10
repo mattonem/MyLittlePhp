@@ -6,11 +6,12 @@ class ExceptionHandlerController extends Controller {
      * @param HttpException $e 
      */
     public function defaultAction($e){
-        if(!$e instanceof MyHttpException)
-            $self->defaultAction(new HttpException(404, "Bad Request"));
+        if (!$e instanceof MyHttpException) {
+            $this->defaultAction(new HttpException(404, "Bad Request"));
+        }
         http_response_code($e->code);
         echo $e->message;
     }
 }
 
-?>
+

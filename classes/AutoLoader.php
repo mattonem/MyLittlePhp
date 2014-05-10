@@ -2,16 +2,16 @@
 // Load my root class
 class AutoLoader {
 	public function __construct() {
-	spl_autoload_register(array($this, 'load'));
+            spl_autoload_register(array($this, 'load'));
 	}
 	// This method will be automatically executed by PHP whenever it encounters
 	// an unknown class name in the source code
 	private function load($className) {
-		$listeDesDossiers = array("classes", "widget", "controller", "model");
+		$listeDesDossiers = array("annotations", "classes", "widget", "controller", "model");
 		
 		$estCeQuOnEnATrouveUn = false;
-		for($i = 0; $i <4; $i++){
-			$adresseFabriquee = __ROOT_DIR . "/" . $listeDesDossiers[$i] . "/" . ucfirst($className) . ".php";
+		foreach ($listeDesDossiers as $dossierName){
+			$adresseFabriquee = __ROOT_DIR . "/" . $dossierName . "/" . ucfirst($className) . ".php";
 			if (is_readable($adresseFabriquee)){
 				require_once($adresseFabriquee);
 				$estCeQuOnEnATrouveUn = true;
@@ -19,9 +19,8 @@ class AutoLoader {
 			
 		}
 		if( $estCeQuOnEnATrouveUn == false){
-			throw new Exception("AutoLoader.class.php n'a r�ussi � charger la classe " . $className );
+			throw new Exception("AutoLoader.class.php n'a reussi a charger la classe " . $className );
 		}
 	}
 }
 $__LOADER = new AutoLoader();
-?>

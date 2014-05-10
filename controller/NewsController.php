@@ -107,7 +107,7 @@ class NewsController extends Controller {
      */
     function search($keywords, $page, $user) {
         $words =  $keywords;
-        if ($arg['user']) {
+        if ($user) {
             $query = array();
         } else {
             $query = array('published' => true);

@@ -2,12 +2,7 @@
 
 class PaginationWidget extends Widget {
 
-    public function render() {
-        $args = func_get_args();
-        $controller = $args[0];
-        $action = $args[1];
-        $total = $args[2];
-        $params = $args[3];
+    public function render($controller, $action, $total, $params) {
         $output = "";
         if ($params['page'] > 0) {
             $firsturl = Controller::urlFor($controller, $action, array_merge($params, array('page' => 0)));

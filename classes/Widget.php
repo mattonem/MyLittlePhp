@@ -1,5 +1,5 @@
 <?php
-class Widget {
+class Widget extends RenderingObject{
     
     public function render(){}
     

@@ -5,7 +5,7 @@ class NewsController extends Controller {
     /**
      * @Action
      */
-    public function defaultAction($args) {
+    public function defaultAction() {
         $this->redirect("News", "index");
     }
 
@@ -14,15 +14,16 @@ class NewsController extends Controller {
      * @Requires(method='GET', name='page', requirement = @DefaultValue(value = 0))
      * @Requires(method='SESSION', name='user', requirement = @IsAdmin)
      */
-    function index($args) {
-        $query = array('order' => 'date desc','limit' => 3,'offset' => 3*$args['page'] , 'conditions' => array('published=?', true));
-        if($args['user'])
+    function index($page, $user) {
+        $query = array('order' => 'date desc','limit' => 3,'offset' => 3*$page , 'conditions' => array('published=?', true));
+        if ($user) {
             $query['conditions'] = array();
+        }
         $total = News::count($query);
         $models = News::find('all', $query);
         $this->callView("IndexView", array(
             "models" => $models,
-            "page" => $args['page'],
+            "page" => $page,
             "total" => ceil($total / 3) - 1,
             "action" => "index",
         ));
@@ -33,12 +34,14 @@ class NewsController extends Controller {
      * @Requires(method='GET', name='id', requirement = @DefaultValue(value = false))
      * @Requires(method='SESSION', name='user', requirement = @IsAdmin)
      */
-    function view($args) {
-        if (!$args["id"])
+    function view($id, $user) {
+        if (!$id) {
             return $this->redirect("News", "index");
-        $model = News::find_by_pk($args["id"],array());
-        if( !$args['user'] && !$model->published)
+        }
+        $model = News::find_by_pk($id,array());
+        if (!$user && !$model->published) {
             throw new MyHttpException(403, "bad");
+        }
         $this->callView("ViewView", $model);
     }
     
@@ -50,18 +53,22 @@ class NewsController extends Controller {
      * @Requires(method='POST', name='published', requirement = @DefaultValue(value = false))
      * @Requires(method='SESSION', name='user', requirement = @MustBeAdmin)
      */
-    function edit($args) {
-        $model = News::find_by_pk($args["id"], array());
-        if (!($args["name"] || $args["content"]))
+    function edit($id, $name, $content, $published) {
+        $model = News::find_by_pk($id, array());
+        if (!($name || $content)) {
             return $this->callView("EditView", $model);
-        if ($args['name'])
-            $model->name = $args["name"];
-        if ($args['content'])
-            $model->content = $args['content'];
-        if ($args['published'])
+        }
+        if ($name) {
+            $model->name = $name;
+        }
+        if ($content) {
+            $model->content = $content;
+        }
+        if ($published) {
             $model->published = true;
-        else
+        } else {
             $model->published = false;
+        }
         $model->save();
         return $this->redirect("News", "view", array("id" => $model->id));
     }
@@ -73,40 +80,46 @@ class NewsController extends Controller {
      * @Requires(method='POST', name='published', requirement = @DefaultValue(value = false))
      * @Requires(method='SESSION', name='user', requirement = @MustBeAdmin)
      */
-    function create($args) {
+    function create($name, $content, $published) {
         $model = new News();
-        if (!($args["name"] || $args["content"]))
+        if (!($name || $content)) {
             return $this->callView("CreateView", $model);
-        if ($args['name'])
-            $model->name = $args["name"];
-        if ($args['content'])
-            $model->content = $args['content'];
-        if ($args['published'])
+        }
+        if ($name) {
+            $model->name = $name;
+        }
+        if ($content) {
+            $model->content = $content;
+        }
+        if ($published) {
             $model->published = true;
-        else
+        } else {
             $model->published = false;
+        }
         $model->save();
         return $this->redirect("News", "view", array("id" => $model->id));
     }
     
     /**
      * @Requires(method = 'GET', name = 'keywords', requirement = @DefaultValue(value = false))
+     * @Requires(method = 'GET', name = 'page', requirement = @DefaultValue(value = 0))
      * @Requires(method='SESSION', name='user', requirement = @IsAdmin)
      */
-    function search($arg) {
-        $words =  $arg["keywords"];
-        if($arg['user'])
+    function search($keywords, $page, $user) {
+        $words =  $keywords;
+        if ($arg['user']) {
             $query = array();
-        else
+        } else {
             $query = array('published' => true);
+        }
         $query['or'] = array('content' => array('regex' => '.*'."are".'.*'));
         var_dump($query);
         
         var_dump(News::count($query));
-        $models = News::findAll(array(), array('sort' => array('date' => 1), 'offset' => $args['page'] * 5, 'limit' => 5));
+        $models = News::findAll(array(), array('sort' => array('date' => 1), 'offset' => $page * 5, 'limit' => 5));
         $this->callView("IndexView", array(
             "models" => $models,
-            "page" => $args['page'],
+            "page" => $page,
             "total" => ceil($total / 5) - 1,
             "action" => "IndexAll",
         ));

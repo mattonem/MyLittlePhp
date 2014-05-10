@@ -2,7 +2,7 @@
 class ExceptionHandlerController extends Controller {
 
     /**
-     *
+     * @Action
      * @param HttpException $e 
      */
     public function defaultAction($e){

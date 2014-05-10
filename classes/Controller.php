@@ -52,19 +52,14 @@ abstract class Controller {
     }
 
     /**
-     * @Action
-     */
-    abstract public function defaultAction($requete);
-
-    /**
      *
-     * @param string $action 
+     * @param ReflectionAnnotatedMethod $action 
      */
     public function execute($action, $override = array()) {
         $allAnnotations = $action->getAllAnnotations('Requires');
         $args = Request::getCurrentRequest()->prepareForAction($allAnnotations);
         $args = array_merge($args, $override);
-        $action->invoke($this,$args);
+        $action->invokeArgs($this,$args);
     }
 
     public function redirect($controllerName, $action, $args = array()) {

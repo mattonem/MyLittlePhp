@@ -5,7 +5,7 @@ class AnonymousController extends Controller {
     /**
      * @Action
      */
-    public function defaultAction($requete) {
+    public function defaultAction() {
         $this->redirect("News", "index", array("page" => 0));
     }
     
@@ -15,12 +15,13 @@ class AnonymousController extends Controller {
      * @Requires(method='POST', name='password', requirement = @DefaultValue(value = false))
      * @Requires(method='SYS', name='msg', requirement = @DefaultValue(value = ''))
      */
-    public function login($args) {
-        if (!($args["username"] && $args["password"]))
+    public function login($username, $password, $msg) {
+        if (!($username && $password)) {
             return $this->callView("LoginView", array(
-                        'msg' => $args["msg"],
+                        'msg' => $msg,
             ));
-        $user = User::find_by_username_and_password($args['username'], $args['password']);
+        }
+        $user = User::find_by_username_and_password($username, $password);
         if (!$user)
             return $this->redirect("Anonymous", "login", array(
                         "username" => false,

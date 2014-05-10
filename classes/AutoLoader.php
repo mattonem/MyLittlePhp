@@ -7,7 +7,7 @@ class AutoLoader {
 	// This method will be automatically executed by PHP whenever it encounters
 	// an unknown class name in the source code
 	private function load($className) {
-		$listeDesDossiers = array("annotations", "classes", "widget", "controller", "model");
+		$listeDesDossiers = array("annotations", "classes", "classes/forms", "widget", "controller", "model");
 		
 		$estCeQuOnEnATrouveUn = false;
 		foreach ($listeDesDossiers as $dossierName){

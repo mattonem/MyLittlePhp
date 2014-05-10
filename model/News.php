@@ -1,10 +1,18 @@
 <?php
 
-class News extends ActiveRecord\Model {
+class News extends \Model {
 
     protected static $collectionName = 'news';
     public $_env = array();
-
+    
+    public function description() {
+        return array(
+            TextElement::create('name', 'Name'),
+            BooleanElement::create('published', 'Published'),
+            TextLongElement::create('content', 'Content'),
+        );
+    }
+    
     public function accept($visitor) {
         return $visitor->visitNews($this);
     }

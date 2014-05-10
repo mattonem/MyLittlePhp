@@ -34,5 +34,4 @@ $controller = new ExceptionHandlerController();
 $controller->defaultAction($e);
 } catch (Exception $e) {
 echo 'Error : ' . $e->getMessage() . "\n";
-}
-?>																																										
+}																																										

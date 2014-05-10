@@ -6,14 +6,7 @@ class IndexView extends View {
         $content = "";
         $models = $args["models"];
         foreach ($models as $aNews) {
-            $content .= CardWidget::renderWidget(
-                            $this->template("news", array(
-                                "url" => Controller::urlFor("news", "view", array("id" => $aNews->id)),
-                                "title" => $aNews->name,
-                                "date" => date("m.d.y", strtotime($aNews->date)),
-                                "content" => $aNews->getContentHtml(),
-                                "id" => $aNews->id,
-            )));
+            $content .= CardWidget::renderWidget($aNews);
         }
 
         $content .= PaginationWidget::renderWidget("News", $args["action"], $args["total"], array('page' => $args["page"]));

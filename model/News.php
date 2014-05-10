@@ -5,15 +5,21 @@ class News extends ActiveRecord\Model {
     protected static $collectionName = 'news';
     public $_env = array();
 
+    public function accept($visitor) {
+        return $visitor->visitNews($this);
+    }
+    
     static function br2nl($string) {
         return preg_replace('/\<br(\s*)?\/?\>/i', "&#13;&#10;", $string);
     }
 
     public function beforeSave() {
-        if (!$this->getPublished())
+        if (!$this->getPublished()) {
             $this->setPublished(false);
-        if (!$this->getDate())
+        }
+        if (!$this->getDate()) {
             $this->setDate(time());
+        }
         parent::beforeSave();
     }
 
@@ -49,8 +55,9 @@ class News extends ActiveRecord\Model {
 
             $i++;
         }
-        if ($this->_env != array())
+        if ($this->_env != array()) {
             $output .= $this->closeAll();
+        }
         return nl2br($output);
     }
 
@@ -77,8 +84,9 @@ class News extends ActiveRecord\Model {
 
     public function closeAll() {
         $output = "";
-        while (count($this->_env) > 0)
+        while (count($this->_env) > 0) {
             $output .= $this->closeenv();
+        }
         return $output;
     }
 

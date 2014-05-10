@@ -8,6 +8,9 @@ class RenderingObject {
         }
         $filename = dirname($class->getFileName()).'/templates/' . $name . 'Template.php';
         if (!file_exists($filename)) {
+            if ($class->getName() == "RenderingObject") {
+                throw new MyHttpException(500, "template ". $name. " does'nt existe.");
+            }
             return $this->template($name, $values, $class->getParentClass());
         }
         $output = file_get_contents($filename);

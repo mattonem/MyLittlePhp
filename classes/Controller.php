@@ -59,7 +59,11 @@ abstract class Controller {
      * @param ReflectionAnnotatedMethod $action 
      */
     public function execute($action, $override = array()) {
-        $allAnnotations = $action->getAllAnnotations('Requires');
+        $reflectionAnnotatedClass = new ReflectionAnnotatedClass($this);
+        $allAnnotations = array_merge(
+                $action->getAllAnnotations('Requires'), 
+                $reflectionAnnotatedClass->getAllAnnotations('Requires')
+                );
         $args = Request::getCurrentRequest()->prepareForAction($allAnnotations);
         $args = array_merge($args, $override);
         $action->invokeArgs($this,$args);

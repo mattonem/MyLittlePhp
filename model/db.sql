@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 21, 2014 at 12:04 PM
--- Server version: 5.5.35-1ubuntu1
--- PHP Version: 5.5.9-1ubuntu4
+-- Generation Time: May 16, 2014 at 05:22 PM
+-- Server version: 5.5.35-0+wheezy1
+-- PHP Version: 5.4.4-14+deb7u8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,39 +17,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `mylittlephp`
+-- Database: `IPE`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `news`
+-- Table structure for table `designation`
 --
 
-DROP TABLE IF EXISTS `news`;
-CREATE TABLE IF NOT EXISTS `news` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
-  `content` text NOT NULL,
-  `published` tinyint(1) DEFAULT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+DROP TABLE IF EXISTS `designation`;
+CREATE TABLE IF NOT EXISTS `designation` (
+  `id` int(11) NOT NULL,
+  `G` float NOT NULL,
+  `h` float NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(10) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  `admin` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

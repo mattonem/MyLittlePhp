@@ -4,13 +4,13 @@
         [@head]
     </head>
     <body>
-        <div class="container">
-            <div class="col-md-8 col-md-offset-2">
+        <div class="container-fluid">
+            <div class="col-md-12">
                 [@body]
             </div>
         </div>
         <footer> 
-        <div class="container text-center">
+        <div class="container-fluid text-center">
             <div class="row text-muted">
                 <a href="." class="text-muted">Home</a> 
                 |

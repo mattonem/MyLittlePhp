@@ -6,7 +6,7 @@ class AnonymousController extends Controller {
      * @Action
      */
     public function defaultAction() {
-        $this->redirect("News", "index", array("page" => 0));
+        $this->redirect("Table", "index");
     }
     
     /**

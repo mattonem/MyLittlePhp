@@ -13,6 +13,10 @@ body {
     padding: 1.5rem;
 }
 
+input {
+    min-width: 220px;
+}
+
 .input-group {
     margin: 1.5rem;
 }

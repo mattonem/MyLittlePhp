@@ -17,7 +17,9 @@ require_once(__ROOT_DIR . '/classes/AutoLoader.php');
 // Connect database
 ActiveRecord\Config::initialize(function($cfg) {
 $cfg->set_model_directory(__DIR__ . '/model');
-$cfg->set_connections(array('development' => 'mysql://IPE:ipe@127.0.0.1/IPE'));
+$cfg->set_connections(array(
+    'development' => 'mysql://IPE:ipe@127.0.0.1/IPE',
+    'master' => 'mysql://mylittlephp:mylittlephp@127.0.0.1/mylittlephp'));
 $cfg->set_default_connection('development');
 });
 

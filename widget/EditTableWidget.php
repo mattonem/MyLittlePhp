@@ -94,4 +94,18 @@ class EditTableWidget extends Widget {
             'value' => $this->_model->$name,
         ));
     }
+    
+    function visiteIntegerElement($aIntegerElement) {
+        if($aIntegerElement->ai) {
+            $name = strtolower($aIntegerElement->name);
+            return $this->_model->$name;
+        }
+            
+        $name = strtolower($aIntegerElement->name);
+        return $this->template('floatElementInline', array(
+            'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+            'value' => $this->_model->$name,
+            'step' => $aIntegerElement->step,
+        ));
+    }
 }

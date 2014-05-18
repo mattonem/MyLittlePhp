@@ -10,7 +10,11 @@ abstract class Model extends ActiveRecord\Model{
         foreach ($this::table()->columns as $aColumn) {
             switch ($aColumn->raw_type) {
                 case "int":
-                    $arr[]= FloatElement::create($aColumn->name, $aColumn->name);
+                    $el = IntegerElement::create($aColumn->name, $aColumn->name);
+                    if ($aColumn->auto_increment) {
+                        $el->ai = true;
+                    }
+                    $arr[] = $el;
                     break;
                 case "float":
                     $arr[]= FloatElement::create($aColumn->name, $aColumn->name);

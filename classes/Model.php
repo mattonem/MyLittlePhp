@@ -15,7 +15,7 @@ abstract class Model extends ActiveRecord\Model{
                 case "float":
                     $arr[]= FloatElement::create($aColumn->name, $aColumn->name);
                     break;
-                case "text":
+                case "varchar":
                     $arr[]= TextElement::create($aColumn->name, $aColumn->name);
                     break;
             }

@@ -82,4 +82,16 @@ class EditTableWidget extends Widget {
             'step' => $aFloatElement->step,
         ));
     }
+    
+    /**
+     * 
+     * @param TextElement $aTextElement
+     */
+    function visiteTextElement($aTextElement) {
+        $name = strtolower($aTextElement->name);
+        return $this->template('textElementInline', array(
+            'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+            'value' => $this->_model->$name,
+        ));
+    }
 }

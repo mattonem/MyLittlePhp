@@ -98,7 +98,12 @@ class EditTableWidget extends Widget {
     function visiteIntegerElement($aIntegerElement) {
         if($aIntegerElement->ai) {
             $name = strtolower($aIntegerElement->name);
-            return $this->_model->$name;
+            $res = $this->_model->$name;
+            $res .= $this->template('hiddenElement', array(
+                'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+                'value' => $this->_model->$name,
+                ));
+            return $res;
         }
             
         $name = strtolower($aIntegerElement->name);

@@ -77,7 +77,7 @@ class EditTableWidget extends Widget {
     function visiteFloatElement($aFloatElement) {
         $name = strtolower($aFloatElement->name);
         return $this->template('floatElementInline', array(
-            'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+            'name' => 'Model['.$this->_iterator.']['.$name.']',
             'value' => $this->_model->$name,
             'step' => $aFloatElement->step,
         ));
@@ -90,7 +90,7 @@ class EditTableWidget extends Widget {
     function visiteTextElement($aTextElement) {
         $name = strtolower($aTextElement->name);
         return $this->template('textElementInline', array(
-            'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+            'name' => 'Model['.$this->_iterator.']['.$name.']',
             'value' => $this->_model->$name,
         ));
     }
@@ -100,7 +100,7 @@ class EditTableWidget extends Widget {
             $name = strtolower($aIntegerElement->name);
             $res = $this->_model->$name;
             $res .= $this->template('hiddenElement', array(
-                'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+                'name' => 'Model['.$this->_iterator.']['.$name.']',
                 'value' => $this->_model->$name,
                 ));
             return $res;
@@ -108,7 +108,7 @@ class EditTableWidget extends Widget {
             
         $name = strtolower($aIntegerElement->name);
         return $this->template('floatElementInline', array(
-            'name' => get_class($this->_model).'['.$this->_iterator.']['.$name.']',
+            'name' => 'Model['.$this->_iterator.']['.$name.']',
             'value' => $this->_model->$name,
             'step' => $aIntegerElement->step,
         ));

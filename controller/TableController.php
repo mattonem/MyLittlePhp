@@ -14,6 +14,7 @@ class TableController extends Controller {
     public function index() {
         $models = array(
             Designation::table(),
+            C1C2::table(),
         );
         $this->callView('Index', $models);
     }
@@ -31,25 +32,25 @@ class TableController extends Controller {
     /**
      * @Action
      * @Requires(method='GET', name='table', requirement = @DefaultValue(value = false))
-     * @Requires(method='POST', name='Designation', requirement = @DefaultValue(value = false))
+     * @Requires(method='POST', name='Model', requirement = @DefaultValue(value = false))
      */
-    public function editTable($table, $designations) {
+    public function editTable($table, $model) {
         $modelClass = ucfirst($table);
-        if($designations) {
-            foreach ($designations as $aDesignation) {
-                if (isset($aDesignation['id']  ) && $aDesignation['id']) {
-                    $model = $modelClass::find($aDesignation['id']);
-                    $model->update_attributes($aDesignation);
+        if($model) {
+            foreach ($model as $aModel) {
+                if (isset($aModel['id']  ) && $aModel['id']) {
+                    $model = $modelClass::find($aModel['id']);
+                    $model->update_attributes($aModel);
                     $model->save();
                 } else {
                     $new = false;
-                    foreach ($aDesignation as $aField) {
+                    foreach ($aModel as $aField) {
                         if ($aField) {
                             $new = true;
                         }
                     }
                     if ($new) {
-                        $model = $modelClass::create($aDesignation);
+                        $model = $modelClass::create($aModel);
                         $model->save();
                     }
                 }

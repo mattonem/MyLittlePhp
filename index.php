@@ -13,6 +13,8 @@ define('__BASE_URL', implode('/', $base_url));
 // Load the Loader and Libs class to automatically load classes when needed
 require_once(__ROOT_DIR . '/lib/addendum/annotations.php');
 require_once(__ROOT_DIR . '/lib/php-activerecord/ActiveRecord.php');
+require_once(__ROOT_DIR . '/lib/Michelf/Markdown.inc.php');
+require_once(__ROOT_DIR . '/lib/Michelf/MarkdownExtra.inc.php');
 require_once(__ROOT_DIR . '/classes/AutoLoader.php');
 // Connect database
 ActiveRecord\Config::initialize(function($cfg) {

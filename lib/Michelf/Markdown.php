@@ -229,14 +229,14 @@ class Markdown implements MarkdownInterface {
 
 		# Hashify HTML blocks:
 		# We only want to do this for block-level HTML tags, such as headers,
-		# lists, and tables. That's because we still want to wrap <p>s around
+		# lists, and tables. Thats because we still want to wrap <p>s around
 		# "paragraphs" that are wrapped in non-block-level tags, such as anchors,
-		# phrase emphasis, and spans. The list of tags we're looking for is
+		# phrase emphasis, and spans. The list of tags were looking for is
 		# hard-coded:
 		#
 		# *  List "a" is made of tags which can be both inline or block-level.
 		#    These will be treated block-level when the start tag is alone on 
-		#    its line, otherwise they're not matched here and will be taken as 
+		#    its line, otherwise theyre not matched here and will be taken as 
 		#    inline later.
 		# *  List "b" is made of tags which are always block-level;
 		#
@@ -562,7 +562,7 @@ class Markdown implements MarkdownInterface {
 
 		#
 		# Last, handle reference-style shortcuts: [link text]
-		# These must come last in case you've also got [link text][1]
+		# These must come last in case youve also got [link text][1]
 		# or [link text](/foo)
 		#
 		$text = preg_replace_callback('{
@@ -664,7 +664,7 @@ class Markdown implements MarkdownInterface {
 
 		#
 		# Next, handle inline images:  ![alt text](url "optional title")
-		# Don't forget: encode * and _
+		# Dont forget: encode * and _
 		#
 		$text = preg_replace_callback('{
 			(				# wrap whole match in $1
@@ -715,7 +715,7 @@ class Markdown implements MarkdownInterface {
 			$result = $this->hashPart($result);
 		}
 		else {
-			# If there's no such link ID, leave intact:
+			# If theres no such link ID, leave intact:
 			$result = $whole_match;
 		}
 
@@ -771,7 +771,7 @@ class Markdown implements MarkdownInterface {
 		return $text;
 	}
 	protected function _doHeaders_callback_setext($matches) {
-		# Terrible hack to check we haven't found an empty list item.
+		# Terrible hack to check we havent found an empty list item.
 		if ($matches[2] == '-' && preg_match('{^-(?: |$)}', $matches[1]))
 			return $matches[0];
 		
@@ -876,11 +876,11 @@ class Markdown implements MarkdownInterface {
 	#	Process the contents of a single ordered or unordered list, splitting it
 	#	into individual list items.
 	#
-		# The $this->list_level global keeps track of when we're inside a list.
+		# The $this->list_level global keeps track of when were inside a list.
 		# Each time we enter a list, we increment it; when we leave a list,
-		# we decrement. If it's zero, we're not in a list anymore.
+		# we decrement. If its zero, were not in a list anymore.
 		#
-		# We do this because when we're not inside a list, we want to treat
+		# We do this because when were not inside a list, we want to treat
 		# something like this:
 		#
 		#		I recommend upgrading to version
@@ -890,9 +890,9 @@ class Markdown implements MarkdownInterface {
 		# As a single paragraph, despite the fact that the second line starts
 		# with a digit-period-space sequence.
 		#
-		# Whereas when we're inside a list (or sub-list), that line will be
+		# Whereas when were inside a list (or sub-list), that line will be
 		# treated as the start of a sub-list. What a kludge, huh? This is
-		# an aspect of Markdown's syntax that's hard to parse perfectly
+		# an aspect of Markdowns syntax thats hard to parse perfectly
 		# without resorting to mind-reading. Perhaps the solution is to
 		# change the syntax rules such that sub-lists must start with a
 		# starting cardinal number; e.g. "1." or "a.".
@@ -1528,7 +1528,7 @@ class Markdown implements MarkdownInterface {
 #
 # Temporary Markdown Extra Parser Implementation Class
 #
-# NOTE: DON'T USE THIS CLASS
+# NOTE: DONT USE THIS CLASS
 # Currently the implementation of of Extra resides here in this temporary class.
 # This makes it easier to propagate the changes between the three different
 # packaging styles of PHP Markdown. When this issue is resolved, this
@@ -1769,7 +1769,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 	# _HashHTMLBlocks_InHTML when it encounter block tags. When the markdown="1" 
 	# attribute is found within a tag, _HashHTMLBlocks_InHTML calls back
 	#  _HashHTMLBlocks_InMarkdown to handle the Markdown syntax within the tag.
-	# These two functions are calling each other. It's recursive!
+	# These two functions are calling each other. Its recursive!
 	#
 		if ($this->no_markup)  return $text;
 
@@ -1787,8 +1787,8 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 	# Parse markdown text, calling _HashHTMLBlocks_InHTML for block tags.
 	#
 	# *   $indent is the number of space to be ignored when checking for code 
-	#     blocks. This is important because if we don't take the indent into 
-	#     account, something like this (which looks right) won't work as expected:
+	#     blocks. This is important because if we dont take the indent into 
+	#     account, something like this (which looks right) wont work as expected:
 	#
 	#     <div>
 	#         <div markdown="1">
@@ -1796,7 +1796,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 	#         </div>  <-- Is this a Markdown code block or a real tag?
 	#     <div>
 	#
-	#     If you don't like this, just don't indent the tag on which
+	#     If you dont like this, just dont indent the tag on which
 	#     you apply the markdown="1" attribute.
 	#
 	# *   If $enclosing_tag_re is not empty, stops at the first unmatched closing 
@@ -1964,7 +1964,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 			#
 			# Check for: Opening Block level tag or
 			#            Opening Context Block tag (like ins and del) 
-			#               used as a block tag (tag is alone on it's line).
+			#               used as a block tag (tag is alone on its line).
 			#
 			else if (preg_match('{^<(?:'.$this->block_tags_re.')\b}', $tag) ||
 				(	preg_match('{^<(?:'.$this->context_block_tags_re.')\b}', $tag) &&
@@ -1987,7 +1987,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 				$tag{1} == '!' || $tag{1} == '?')
 			{
 				# Need to parse tag and following text using the HTML parser.
-				# (don't check for markdown attribute)
+				# (dont check for markdown attribute)
 				list($block_text, $text) = 
 					$this->_hashHTMLBlocks_inHTML($tag . $text, "hashClean", false);
 				
@@ -2191,7 +2191,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 		} while ($depth > 0);
 		
 		#
-		# Hash last block text that wasn't processed inside the loop.
+		# Hash last block text that wasnt processed inside the loop.
 		#
 		$parsed .= $this->$hash_method($block_text);
 		
@@ -2265,7 +2265,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 
 		#
 		# Last, handle reference-style shortcuts: [link text]
-		# These must come last in case you've also got [link text][1]
+		# These must come last in case youve also got [link text][1]
 		# or [link text](/foo)
 		#
 		$text = preg_replace_callback('{
@@ -2371,7 +2371,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 
 		#
 		# Next, handle inline images:  ![alt text](url "optional title")
-		# Don't forget: encode * and _
+		# Dont forget: encode * and _
 		#
 		$text = preg_replace_callback('{
 			(				# wrap whole match in $1
@@ -2425,7 +2425,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 			$result = $this->hashPart($result);
 		}
 		else {
-			# If there's no such link ID, leave intact:
+			# If theres no such link ID, leave intact:
 			$result = $whole_match;
 		}
 
@@ -3016,7 +3016,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 		$node_id = $this->fn_id_prefix . $matches[1];
 		
 		# Create footnote marker only if it has a corresponding footnote *and*
-		# the footnote hasn't been used by another marker.
+		# the footnote hasnt been used by another marker.
 		if (isset($this->footnotes[$node_id])) {
 			$num =& $this->footnotes_numbers[$node_id];
 			if (!isset($num)) {
